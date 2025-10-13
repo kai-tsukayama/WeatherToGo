@@ -1,7 +1,8 @@
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './components/Home'
 import Top from './components/Top'
+import CheckWeather from './components/CheckWeather'
 
 function App() {
 
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Top />} />
         <Route path="/home" element={<Home />} />
+        <Route path='/location' element={<CheckWeather />} />
       </Routes>
     </BrowserRouter>
   )
