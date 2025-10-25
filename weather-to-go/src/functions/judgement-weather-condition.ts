@@ -23,6 +23,13 @@ export const judgementWeather = (data: WeatherInfomation, avgSpeed: number): str
     // 視程の平均を比率を考慮して計算
     const avgVis = weightedAverage(data.visibility)
 
+    // 天気コードに雷を表す95，96，99があるか確認。
+    // あれば95を固定で返す。
+    const isThunderCode = (code: number[]): number => {
+        return code.some(c => [95, 96, 99].includes(c)) ? 95 : 0;
+    }
+    const thunderCode = isThunderCode(data.weatherCode);
+
     const counts: Record<number, number> = {};
 
     // 各コードを1回ずつ数える
@@ -53,9 +60,13 @@ export const judgementWeather = (data: WeatherInfomation, avgSpeed: number): str
     if(avgSnow > 0.3 || [71, 73, 75, 77, 85, 86].includes(mostCommonCode)){
         condition = "雪"
     }
-    else if(avgPre >= 50 || [51, 53, 55, 61, 63, 65, 80, 81, 82, 95].includes(mostCommonCode)){
+    else if(avgPre >= 1 && avgPre < 50 ){
         condition = "雨"
     }
+    else if(avgPre >= 50 || [51, 53, 55, 61, 63, 65, 80, 81, 82, 95].includes(mostCommonCode)){
+        condition = "豪雨"
+    }
+
     else if(avgVis < 5000 || [45, 48].includes(mostCommonCode)){
         condition = "霧"
     }
@@ -65,6 +76,14 @@ export const judgementWeather = (data: WeatherInfomation, avgSpeed: number): str
 
     if(avgSpeed >= 10 && condition === "晴れ"){
         condition = "風が強い晴れ"
+    }
+
+    if(data.windSpeed >= 25){
+        condition = "台風"
+    }
+
+    if(thunderCode === 95){
+        condition = "雷雨（雷のみの可能性あり）"
     }
 
     const morningVisibility = data.visibility.slice(0, Math.floor(data.visibility.length / 3));

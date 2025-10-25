@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './App.css'
 import Home from './components/Home'
 import Top from './components/Top'
 import CheckWeather from './components/CheckWeather'

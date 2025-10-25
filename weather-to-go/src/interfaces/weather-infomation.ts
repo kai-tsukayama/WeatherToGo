@@ -16,5 +16,7 @@ export interface WeatherInfomation {
     elevation: number;
     // 最終判断の表示パラメータ
     condition?: string;
+    // アイコン
+    icon?: string
 }
 

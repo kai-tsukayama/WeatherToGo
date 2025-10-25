@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getWeather } from '../apis/weather-get-func';
 import type { WeatherInfomation } from '../interfaces/weather-infomation';
 import { judgementWeather } from '../functions/judgement-weather-condition';
+import { setWeatherIcon } from '../functions/set-weather-icon';
 
 // どこの天気を探すかを表示ホーム画面
 function Home() {
@@ -56,11 +57,15 @@ function Home() {
             visibility: weatherDataRes.hourly.visibility,
             weatherCode: weatherDataRes.hourly.weather_code,
             elevation: weatherDataRes.elevation,
-            // ここはロジックで変えるが、一旦は晴れに統一する
         }
 
         // 最終的な天気を判断する関数を実行
         const condition = judgementWeather(weather, windSpeedAva);
+
+        // 天気アイコンを設定する関数を実行
+        const setIcon = setWeatherIcon(condition);
+
+        weather.icon = setIcon;
         weather.condition = condition;
 
         // 動作確認用
@@ -70,16 +75,40 @@ function Home() {
         navigate("/location", { state: { locationData, weather } })
     }
     return (
-        <div>
-            <h1>どこの天気を調べますか？</h1>
-            <br />
-            {error &&(<>
-                    <p>{error}</p>
-                    <br />
-                </>)
-            }
-            <input type="text" style={{ backgroundColor: '#fff', border: "1px solid #282727ff" }} value={query} onChange={handleSubmit} />
-            <button type="button" onClick={submitQuery}>検索する</button>
+        <div className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#f8fafc] via-[#f8fafc] to-[#e6eefc] text-center px-6">
+            <div className="absolute inset-0" />
+
+            <div className="relative z-10 w-full max-w-xl">
+                <div className="text-4xl md:text-5xl font-semibold text-slate-800 mb-6 tracking-tight">
+                    天気を検索
+                </div>
+
+                <div className="text-slate-500 text-lg md:text-xl font-light mb-12 leading-relaxed">
+                    地名を入力して<br className="md:hidden" />
+                    今日の天気をチェックしましょう。
+                </div>
+
+                {error && (
+                    <div className="text-sky-600 text-sm font-medium mb-4">{error}</div>
+                )}
+
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                    <input
+                        type="text"
+                        placeholder="例：東京、沖縄、札幌..."
+                        value={query}
+                        onChange={handleSubmit}
+                        className="flex-1 w-full px-5 py-3 rounded-xl border border-slate-200 bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-300 focus:border-sky-300 transition-colors duration-200"
+                    />
+                    <button
+                        type="button"
+                        onClick={submitQuery}
+                        className="w-full sm:w-auto px-10 py-3 text-lg font-medium rounded-xl text-white bg-sky-500 hover:bg-sky-600 focus:outline-none transition-colors duration-200"
+                    >
+                        検索する
+                    </button>
+                </div>
+            </div>
         </div>
     )
 }
