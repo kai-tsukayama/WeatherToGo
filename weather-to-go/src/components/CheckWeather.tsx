@@ -24,22 +24,37 @@ function CheckWeather() {
       <div className="absolute inset-0" />
 
       <div className="relative z-10 w-full max-w-5xl text-center">
-        <div className="mb-10">
-          <div className="text-4xl md:text-5xl font-semibold text-slate-800 mb-3 tracking-tight">
-            {locationData.display_name}
-          </div>
-          <div className="text-slate-500 text-lg font-light">
+        <div className="mb-0">
+          <div className="text-xl md:text-lg font-semibold text-slate-800 mb-3 tracking-tight">
             今日の天気
+          </div>
+          <div className="text-4xl text-sky-600 tracking-tight font-bold">
+            {locationData.display_name}
           </div>
         </div>
 
-        <div className="mb-14">
-          <div className="text-6xl font-semibold text-sky-600 mb-4">
-            {weatherData.condition}
+        <div className="mb-14 flex flex-col items-center">
+          <div className="items-center justify-center gap-6 mb-8">
+            <img
+              src={weatherData.icon}
+              alt=""
+              className="w-80 md:w-96 lg:w-[28rem] h-auto object-contain drop-shadow-md"
+            />
+            <div className="text-5xl md:text-6xl lg:text-7xl font-semibold text-sky-600 tracking-tight">
+              {weatherData.condition}
+            </div>
           </div>
-          <img src={weatherData.icon} alt="" />
-          <div>{weatherData.plan}</div>
-          <div className="text-slate-500 text-lg">
+
+          <div className="mt-4 mb-8 text-center">
+            <h2 className="text-lg md:text-xl font-semibold text-slate-800 mb-3">
+              今日のおすすめプラン
+            </h2>
+            <p className="text-2xl md:text-3xl text-sky-700 font-semibold leading-relaxed max-w-2xl mx-auto">
+              {weatherData.plan}
+            </p>
+          </div>
+
+          <div className="text-slate-500 text-base md:text-lg">
             標高 {weatherData.elevation}m・風速 {weatherData.windSpeed}m/s
           </div>
         </div>
@@ -50,7 +65,7 @@ function CheckWeather() {
               key={index}
               className="min-w-[260px] flex-shrink-0 snap-center bg-white rounded-2xl shadow-md border border-slate-100 p-6 text-left hover:scale-105 hover:shadow-lg transition-all duration-300"
             >
-              <div className="text-slate-400 text-base mb-3 font-medium">
+              <div className="text-slate-400 text-sm mb-3 font-medium">
                 {index + 1}時 のデータ
               </div>
 
