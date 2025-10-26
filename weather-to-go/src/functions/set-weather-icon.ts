@@ -19,7 +19,7 @@ export const setWeatherIcon = (condition: string): string => {
             return cloudy
         case "雨" :
             return rain
-        case "豪雨":
+        case "大雨・豪雨の可能性":
             return heavyrain
         case "霧":
             return fog

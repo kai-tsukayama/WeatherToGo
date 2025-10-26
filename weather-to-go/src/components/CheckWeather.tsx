@@ -6,6 +6,7 @@ function CheckWeather() {
   const { state } = useLocation();
   const locationData = state?.locationData as Location
   const weatherData = state?.weather as WeatherInfomation
+  console.log("プラン：", weatherData.plan)
   return (
     <div className="relative flex flex-col items-center justify-start min-h-screen bg-gradient-to-br from-[#f8fafc] via-[#f8fafc] to-[#e6eefc] px-6 py-10">
       <style>{`
@@ -28,7 +29,7 @@ function CheckWeather() {
             {locationData.display_name}
           </div>
           <div className="text-slate-500 text-lg font-light">
-            今日の天気データ
+            今日の天気
           </div>
         </div>
 
@@ -37,6 +38,7 @@ function CheckWeather() {
             {weatherData.condition}
           </div>
           <img src={weatherData.icon} alt="" />
+          <div>{weatherData.plan}</div>
           <div className="text-slate-500 text-lg">
             標高 {weatherData.elevation}m・風速 {weatherData.windSpeed}m/s
           </div>

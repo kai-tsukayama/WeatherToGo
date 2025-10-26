@@ -6,6 +6,7 @@ import { getWeather } from '../apis/weather-get-func';
 import type { WeatherInfomation } from '../interfaces/weather-infomation';
 import { judgementWeather } from '../functions/judgement-weather-condition';
 import { setWeatherIcon } from '../functions/set-weather-icon';
+import { suggestPlan } from '../functions/suggest-plan';
 
 // どこの天気を探すかを表示ホーム画面
 function Home() {
@@ -65,8 +66,12 @@ function Home() {
         // 天気アイコンを設定する関数を実行
         const setIcon = setWeatherIcon(condition);
 
+        // 提案プランを設定する関数を実行
+        const plan = suggestPlan(weather);
+
         weather.icon = setIcon;
         weather.condition = condition;
+        weather.plan = plan;
 
         // 動作確認用
         console.log("取得した天気データ", weatherDataRes)

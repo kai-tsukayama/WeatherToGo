@@ -18,5 +18,7 @@ export interface WeatherInfomation {
     condition?: string;
     // アイコン
     icon?: string
+    // 提案プラン
+    plan?: string
 }
 
