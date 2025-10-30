@@ -68,7 +68,7 @@ export const judgementWeather = (data: WeatherInfomation, avgSpeed: number): str
         condition = "風が強い晴れ"
     }
 
-    if(data.windSpeed >= 25){
+    if(data.windSpeed >= 25 && data.condition === "雨" && data.pressure_msl <= 950){
         condition = "台風"
     }
 

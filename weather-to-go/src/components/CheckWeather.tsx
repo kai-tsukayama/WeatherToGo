@@ -1,12 +1,13 @@
 import { useLocation } from 'react-router-dom'
 import type { Location } from '../interfaces/location';
 import type { WeatherInfomation } from '../interfaces/weather-infomation';
+// import  testImg  from "../assets/icons/cloudy.png"
 
 function CheckWeather() {
   const { state } = useLocation();
   const locationData = state?.locationData as Location
   const weatherData = state?.weather as WeatherInfomation
-  console.log("プラン：", weatherData.plan)
+  // console.log("プラン：", weatherData.plan)
   return (
     <div className="relative flex flex-col items-center justify-start min-h-screen bg-gradient-to-br from-[#f8fafc] via-[#f8fafc] to-[#e6eefc] px-6 py-10">
       <style>{`
@@ -35,13 +36,14 @@ function CheckWeather() {
 
         <div className="mb-14 flex flex-col items-center">
           <div className="items-center justify-center gap-6 mb-8">
-            <img
+            
+            <div className="text-5xl md:text-6xl lg:text-7xl flex items-center font-semibold text-sky-600 tracking-tight">
+              {weatherData.condition}
+              <img
               src={weatherData.icon}
               alt=""
-              className="w-80 md:w-96 lg:w-[28rem] h-auto object-contain drop-shadow-md"
+              className="p-3 w-24 lg:w-[12rem] h-auto object-contain "
             />
-            <div className="text-5xl md:text-6xl lg:text-7xl font-semibold text-sky-600 tracking-tight">
-              {weatherData.condition}
             </div>
           </div>
 

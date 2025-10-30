@@ -1,11 +1,11 @@
-import  sun  from "../assets/icons/sun.svg"
-import cloudy from "../assets/icons/cloudy.svg"
-import fog from "../assets/icons/fog.svg"
-import heavyrain from "../assets/icons/heavyrain.svg"
-import rain from "../assets/icons/rain.svg"
-import snow from "../assets/icons/snow.svg"
-import taifoon from "../assets/icons/taifoon.svg"
-import thunder from "../assets/icons/thumder.svg"
+import sun from "../assets/icons/sun.png"
+import cloudy from "../assets/icons/cloudy.png"
+import fog from "../assets/icons/fog.png"
+import heavyrain from "../assets/icons/heavyrain.png"
+import rain from "../assets/icons/rain.png"
+import snow from "../assets/icons/snow.png"
+import taifoon from "../assets/icons/taifoon.png"
+import thunder from "../assets/icons/thunder.png"
 
 // アイコンをセットする関数
 export const setWeatherIcon = (condition: string): string => {

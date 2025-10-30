@@ -7,6 +7,7 @@ import type { WeatherInfomation } from '../interfaces/weather-infomation';
 import { judgementWeather } from '../functions/judgement-weather-condition';
 import { setWeatherIcon } from '../functions/set-weather-icon';
 import { suggestPlan } from '../functions/suggest-plan';
+import { calculatonAverage } from '../functions/average-property';
 
 // どこの天気を探すかを表示ホーム画面
 function Home() {
@@ -32,8 +33,10 @@ function Home() {
         const data = await locationSearch(query)
         // 動作確認用
         // console.log(data)
+        const name = data[0].display_name.split(",")[0].trim();
+        // console.log(name);
         const locationData: Location = {
-            display_name: data[0].display_name,
+            display_name: name,
             lat: data[0].lat,
             lon: data[0].lon,
         }
@@ -43,25 +46,25 @@ function Home() {
 
         // 風速の平均を出力
         const windSpeedArray: number[] = weatherDataRes.hourly.wind_speed_10m;
-        const avarageWindSpeed = (windSpeedArray: number[]): number => {
-            const totalWindSpeed = windSpeedArray.reduce((item, arr) => item + arr, 0);
-            return totalWindSpeed / windSpeedArray.length;
-        }
-        const windSpeedAva = avarageWindSpeed(windSpeedArray);
+        const pressureArray: number[] = weatherDataRes.hourly.pressure_msl;
+
+        const averageWindSpeed = calculatonAverage(windSpeedArray)
+        const averagePressure = calculatonAverage(pressureArray)
 
         // 天気データを整形する
         const weather: WeatherInfomation = {
             temperature: weatherDataRes.hourly.temperature_2m,
             precipitationProbability: weatherDataRes.hourly.precipitation_probability,
-            windSpeed: windSpeedAva,
+            windSpeed: averageWindSpeed,
             snowfall: weatherDataRes.hourly.snowfall,
             visibility: weatherDataRes.hourly.visibility,
             weatherCode: weatherDataRes.hourly.weather_code,
             elevation: weatherDataRes.elevation,
+            pressure_msl: averagePressure
         }
 
         // 最終的な天気を判断する関数を実行
-        const condition = judgementWeather(weather, windSpeedAva);
+        const condition = judgementWeather(weather, averageWindSpeed);
 
         // 天気アイコンを設定する関数を実行
         const setIcon = setWeatherIcon(condition);

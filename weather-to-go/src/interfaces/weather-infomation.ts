@@ -14,6 +14,8 @@ export interface WeatherInfomation {
     weatherCode: number[];
     // 標高
     elevation: number;
+    // 海面気圧（hPa）
+    pressure_msl: number;
     // 最終判断の表示パラメータ
     condition?: string;
     // アイコン
