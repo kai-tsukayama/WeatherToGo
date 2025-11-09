@@ -13,7 +13,7 @@ export const suggestPlan = (weather: WeatherInfomation): string => {
     let plan = "";
     if(preAvg > 70){
         if(weather.windSpeed > 10 && weather.windSpeed < 25){
-            plan = "豪雨が予想されます☔。また、風も強くなる恐れがあるので、屋内でゆっくり過ごす日にしましょう。"
+            return plan = "豪雨が予想されます☔。また、風も強くなる恐れがあるので、屋内でゆっくり過ごす日にしましょう。"
         }
         plan = "雨が強まりそう。カフェや映画館など、屋内で過ごしましょう。"
     }
@@ -23,7 +23,7 @@ export const suggestPlan = (weather: WeatherInfomation): string => {
     else if(preAvg >= 50 && preAvg < 70){
         plan = "今日は雨のようです☔。外出する際には傘を忘れずにしましょう。"
     }
-    else if(snowfallpAvg > 0.5 && snowfallpAvg <= 5.0){
+    else if(snowfallpAvg > 0.5 && snowfallpAvg < 9.5){
         plan = "雪が降りそうです⛄。防寒をしっかりして外出を。車の運転には注意をしてください。"
     }
     else if(snowfallpAvg >= 9.5){
