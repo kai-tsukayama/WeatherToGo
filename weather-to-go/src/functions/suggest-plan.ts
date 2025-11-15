@@ -1,6 +1,32 @@
 import type { WeatherInfomation } from "../interfaces/weather-infomation";
 
 export const suggestPlan = (weather: WeatherInfomation): string => {
+    const validateWeather = (info: WeatherInfomation): string | null => {
+        const rules = [
+            {key: "temperature", value: info.temperature},
+            {key: "precipitationProbability", value: info.precipitationProbability},
+            {key: "windSpeed", value: info.windSpeed},
+            {key: "snowfall", value: info.snowfall},
+            {key: "visibility", value: info.visibility},
+            {key: "weatherCode", value: info.weatherCode},
+        ];
+
+        for(const r of rules){
+            if(r.value === null || Array.isArray(r.value) && r.value.length === 0){
+                return `${r.key}が不正な値です。`
+            }
+        }
+
+        if(info.temperature.some((v) => v >= 60 || v <= -90)){
+            return `気温があり得ない数値で設定されています。`
+        }
+
+        return null
+    }
+
+    const validate = validateWeather(weather);
+    if(validate) return validate;
+
     // 気温・降水確率・規程の平均値を算出&降雪量の合計を算出
     const tempAvg = weather.temperature.reduce((temp, arr) => temp + arr, 0) / weather.temperature.length;
     const preAvg = weather.precipitationProbability.reduce((pre, arr) => pre + arr, 0) / weather.precipitationProbability.length;
@@ -11,9 +37,14 @@ export const suggestPlan = (weather: WeatherInfomation): string => {
     const correctedTemp = tempAvg - (weather.elevation / 100) * 0.6;
 
     let plan = "";
+
     if(preAvg > 70){
         if(weather.windSpeed > 10 && weather.windSpeed < 25){
             return plan = "豪雨が予想されます☔。また、風も強くなる恐れがあるので、屋内でゆっくり過ごす日にしましょう。"
+        }
+
+        if(weather.windSpeed >= 25){
+            return plan = "台風もしくは台風のような天気となります。外出は避け、安全第一で過ごしましょう。"
         }
         plan = "雨が強まりそう。カフェや映画館など、屋内で過ごしましょう。"
     }
@@ -31,9 +62,6 @@ export const suggestPlan = (weather: WeatherInfomation): string => {
     }
     else if(visibAvg < 3000){
         plan = "霧が出やすい日。運転や外出時の視界に注意してください。"
-    }
-    else if(weather.windSpeed >= 25){
-        plan = "台風もしくは台風のような天気となります。外出は避け、安全第一で過ごしましょう。"
     }
     else {
         if(correctedTemp < 10){
