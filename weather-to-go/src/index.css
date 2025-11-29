@@ -33,6 +33,10 @@ body {
   font-family: system-ui, sans-serif;
   background-color: #f9fafb;
   color: #1e293b;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
 
 h1 {

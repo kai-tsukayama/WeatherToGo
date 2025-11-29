@@ -9,5 +9,9 @@ createRoot(document.getElementById('root')!).render(
     <ChakraProvider value={ defaultSystem }>
           <App />
     </ChakraProvider>
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
   </StrictMode>,
 )
