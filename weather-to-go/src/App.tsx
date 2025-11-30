@@ -1,3 +1,18 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Home from './components/Home'
+import Top from './components/Top'
+import CheckWeather from './components/CheckWeather'
+
+function App() {
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Top />} />
+        <Route path="/home" element={<Home />} />
+        <Route path='/location' element={<CheckWeather />} />
+      </Routes>
+    </BrowserRouter>
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
